@@ -19,9 +19,7 @@ public class Login_Test {
 	@BeforeMethod
 	public void loginSetup() {
 		options = new ChromeOptions();
-		options.setPageLoadStrategy(PageLoadStrategy.EAGER);
 		options.addArguments("--start-maximized");
-		options.addArguments("--incognito");
 		driver = new ChromeDriver(options);
 		driver.get("https://tutorialsninja.com/demo");
 		driver.findElement(By.linkText("My Account")).click();
