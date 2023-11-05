@@ -1,10 +1,10 @@
 package com.tutorialninjademo_Tests;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -44,7 +44,49 @@ public class AddTocartTest {
 		driver.findElement(By.xpath("//div[@id = 'cart']")).click();
 		Thread.sleep(3000);
 		driver.findElement(By.linkText("Checkout")).click();
-	
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//label[normalize-space()='I want to use a new address']")).click();
+		driver.findElement(By.cssSelector("input#input-payment-firstname")).sendKeys("eric");
+		driver.findElement(By.cssSelector("input#input-payment-lastname")).sendKeys("martinez");
+		driver.findElement(By.cssSelector("input#input-payment-company")).sendKeys("pnt");
+		driver.findElement(By.cssSelector("input#input-payment-address-1")).sendKeys("1237 monument blvrd");
+		driver.findElement(By.cssSelector("input#input-payment-city")).sendKeys("martinez");
+		driver.findElement(By.cssSelector("input#input-payment-postcode")).sendKeys("94553");
+		
+		Thread.sleep(2000);
+		
+		Select select = new Select (driver.findElement(By.cssSelector("select#input-payment-country")));
+		select.selectByVisibleText("United States");
+		
+		Thread.sleep(2000);
+		
+		Select select1 = new Select (driver.findElement(By.cssSelector("select#input-payment-zone")));
+		select1.selectByVisibleText("California");
+		
+		driver.findElement(By.cssSelector("input#button-payment-address")).click();
+		
+		Thread.sleep(3000);
+		driver.findElement(By.cssSelector("input#button-shipping-address")).click();
+		
+		Thread.sleep(2000); 
+		driver.findElement(By.cssSelector("textarea.form-control")).sendKeys("Leave it at  my door");
+		driver.findElement(By.cssSelector("input#button-shipping-method")).click();
+		
+		Thread.sleep(2000);
+		driver.findElement(By.cssSelector("div[id='collapse-payment-method'] textarea[name='comment']")).sendKeys("I Don't have any cash");
+		driver.findElement(By.cssSelector("input[type=checkbox]")).click();
+		driver.findElement(By.cssSelector("input#button-payment-method")).click();
+		
+		Thread.sleep(2000);
+		driver.findElement(By.cssSelector("input[value='Confirm Order']")).click();
+		
+		String expectedconfirmMessage = "Your order has been successfully processed!";
+		Thread.sleep(3000);
+		String actualconfirmessage = driver.findElement(By.xpath("//p[normalize-space()='Your order has been successfully processed!']")).getText();
+		Assert.assertTrue(actualconfirmessage.contains(expectedconfirmMessage));
+		
+		driver.findElement(By.cssSelector("a.btn.btn-primary")).click();
+		
 		
 
 	}
